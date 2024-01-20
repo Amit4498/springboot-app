@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions
       - name: Running reusable build action for Java app
+        uses: ./.github/actions
         with:
           java-ver: ${{ env.JAVA_VER }}
           app-dir: '.'
