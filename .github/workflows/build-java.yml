@@ -8,8 +8,8 @@ env:
 jobs:
   java-build:
     steps:
-      - uses: ./.github/sctions
       - name: Running reusable build action for java app
+      - uses: ./.github/actions
         with:
           java-ver: ${{ env.JAVA_VER }}
           app-dir: '.'
