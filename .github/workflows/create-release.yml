@@ -1,0 +1,50 @@
+name: Create Release 
+run-name: Creating release on branch ${{ github.head_ref || github.ref_name }} by @${{ github.actor }}
+
+on:
+  workflow_dispatch:
+  inputs:
+    tag:
+      description: "Release tag"
+      type: string
+      required: true
+
+env:
+  REPO: ${{ github.event.repository.full_name }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  JAVA_VER: 17
+
+Java-build: 
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cretae release
+        run: |
+          gh release cretae ${{ inputs.tag }} --repo $REPO
+        shell: bash
+
+  java-build:
+    needs: [ create-release ]
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v3
+      - name: Running reusable build action for Java app
+        uses: ./.github/actions
+        with:
+          java-ver: ${{ env.JAVA_VER }}
+          app-dir: '.'
+          maven-goal: 'package'
+
+      - name: list the build content
+        run: | 
+          cd ./target/
+          ls -lart
+      
+      - name: Update release 
+        run: |
+          mkdir release-content
+          cp target/*.jar release-content
+          cd release-content
+          tar zcvf ${{ github.workspace }}/release.jar.gz .
+          gh release upload ${{ iputs.tag }} ${{ github.workspace }}/release.tar.gz --repo $REPO
+        shell: bash
