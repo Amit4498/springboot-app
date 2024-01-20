@@ -3,18 +3,18 @@ run-name: Creating release on branch ${{ github.head_ref || github.ref_name }} b
 
 on:
   workflow_dispatch:
-  inputs:
-    tag:
-      description: "Release tag"
-      type: string
-      required: true
+    inputs:
+      tag:
+        description: "Release tag"
+        type: string
+        required: true
 
 env:
   REPO: ${{ github.event.repository.full_name }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   JAVA_VER: 17
 
-Java-build: 
+jobs: 
   create-release:
     runs-on: ubuntu-latest
     steps:
