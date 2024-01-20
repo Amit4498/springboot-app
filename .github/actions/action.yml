@@ -1,0 +1,39 @@
+name: Run maven goal
+
+inputs:
+  java-ver:
+    description: Java ver (8,11,17)
+    type: string
+    default: 11
+    required: true
+  distribution:
+    description: Java distribution (microsoft, temurin, adopt)
+    type: string
+    default: microsoft
+    required: true 
+  app-dir:
+    description: dir containing parent pom.xml
+    type: string
+    default: .
+    required: true   
+  maven-goal:
+    description: The Goal you want to eecute
+    type: string
+    default: microsoft
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Setup java
+      uses: actions/setup-java@3
+      with:
+        java-version: ${{ inputs.java-version }}
+        distribution: ${{ inputs.distribution }}
+
+    - name: Run maven goal
+      working-directory: ${{ inputs.app-dir }}
+      run: | 
+        mvn -v
+        mvn ${{ inputs.maven-goal }}
+      shell: bash

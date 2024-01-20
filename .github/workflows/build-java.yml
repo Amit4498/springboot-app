@@ -1,0 +1,21 @@
+name: Java build usig reusable
+on:
+  workflow_dispatch:
+
+env:
+  JAVA_VER: "17"
+
+jobs:
+  java-build:
+    steps:
+      - uses: ./.github/sctions
+      - name: Running reusable build action for java app
+        with:
+          java-ver: ${{ env.JAVA_VER }}
+          app-dir: '.'
+          maven-goal: 'package'
+
+      - name: list the build content
+        run: | 
+          cd ./target/
+          ls -lart
