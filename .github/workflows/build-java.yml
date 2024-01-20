@@ -7,8 +7,9 @@ env:
 
 jobs:
   java-build:
+    runs-on: ubuntu-latest
     steps:
-      - name: Running reusable build action for java app
+      - name: Running reusable build action for Java app
       - uses: ./.github/actions
         with:
           java-ver: ${{ env.JAVA_VER }}
