@@ -45,6 +45,6 @@ jobs:
           mkdir release-content
           cp target/*.jar release-content
           cd release-content
-          tar zcvf ${{ github.workspace }}/release.jar.gz .
+          tar zcvf ${{ github.workspace }}/spring-petclinic-3.0.0-SNAPSHOT.tar.gz .
           gh release upload ${{ inputs.tag }} ${{ github.workspace }}/release.tar.gz --repo $REPO
         shell: bash
