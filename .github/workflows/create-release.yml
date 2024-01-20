@@ -18,9 +18,9 @@ jobs:
   create-release:
     runs-on: ubuntu-latest
     steps:
-      - name: Cretae release
+      - name: Create release
         run: |
-          gh release cretae ${{ inputs.tag }} --repo $REPO
+          gh release create ${{ inputs.tag }} --repo $REPO
         shell: bash
 
   java-build:
